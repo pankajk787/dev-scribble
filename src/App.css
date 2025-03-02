@@ -1,38 +1,173 @@
-.App {
-  text-align: center;
+.homePageWrapper {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.formWrapper {
+  background-color: #2b2b2b;
+  padding: 35px 20px;
+  border-radius: 10px;
+  width: 400px;
+  max-width: 90%;
+  display: flex;
+  flex-direction: column;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.logoWrapper {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.logoWrapper >img {
+  width: 50px;
+  height: 50px;
+}
+
+.logoText {
+  font-size: 20px;
+  font-weight: bolder;
+}
+
+.logoTagLine {
+  font-size: 12px;
+  color: rgb(26, 250, 26);;
+}
+
+.logoTextWrapper {
+  border-left: 2px solid #fff;
+  padding-left: 10px;
+}
+
+.mainLabel {
+  margin-bottom: 14px;
+  margin-top: 0;
+}
+
+.inputGroup {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  gap: 10px;
 }
 
-.App-link {
-  color: #61dafb;
+.inputGroup input {
+  width: 96%;
+  padding: 7px 5px;
+  border-radius: 4px;
+  outline: none;
+  border: 2px solid transparent;
+  font-size: 16px;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.inputGroup input:focus {
+  border: 2px solid rgb(54, 97, 253);
+}
+
+.joinBtn {
+  background-color: rgb(2, 181, 2);
+  color: #fff;
+  border: none;
+  padding: 8px 20px;
+  font-size: 18px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+  width: 100%;
+}
+
+.joinBtn:hover {
+  background-color: rgb(2, 140, 2);
+}
+
+.createInfo {
+  font-size: 14px;
+}
+button {
+  background: none;
+  border: none;
+}
+
+.createInfo button {
+  color: rgb(2, 181, 2);
+  text-decoration: underline;
+  cursor: pointer;
+  font-size: 15px;
+}
+
+.appFooter {
+  position: absolute;
+  bottom: 10px;
+  width: 100%;
+  text-align: center;
+  color: #fff;
+}
+
+.appFooter a {
+  color: rgb(0, 214, 0);
+  text-decoration: none;
+}
+
+.appLayoutWrapper {
+  display: grid;
+  grid-template-columns: 230px 1fr;
+}
+
+aside.leftPanelWrapper {
+  padding: 0 14px;
+  max-height: 100vh;
+  overflow-y: auto;
+}
+
+main.rightPanelWrapper {
+  background-color: #252525;
+  height: 100%;
+  padding: 10px;
+  height: 100vh;
+  max-height: 100vh;
+  overflow-y: auto;
+}
+
+.dashedBorderBottom {
+  border-bottom: 1px dashed #585757;
+}
+.logoWrapper.dashedBorderBottom {
+  padding: 20px 0;
+}
+
+.btnGroupWrapper {
+  position: absolute;
+  bottom: 5px;
+  left: 5px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 225px;
+  padding: 10px;
+}
+.btnGroupWrapper button{
+  padding: 8px 15px;
+  font-size: 16px;
+  transition: all 0.3s ease-in-out;
+  border-radius: 10px;
+  cursor: pointer;
+  color: #fff;
+}
+.leaveBtn {
+  background-color: rgb(255, 0, 0);
+}
+
+.leaveBtn:hover {
+  background-color: rgb(234, 4, 4);
+}
+
+.copyBtn {
+  background-color: rgb(1, 173, 1);
+}
+
+.copyBtn:hover {
+  background-color: rgb(2, 188, 2);
 }

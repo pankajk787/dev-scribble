@@ -1,0 +1,6 @@
+.connectedUsersWrapper {
+    display: flex;
+    gap: 14px;
+    flex-wrap: wrap;
+    margin-top: 16px;
+}
