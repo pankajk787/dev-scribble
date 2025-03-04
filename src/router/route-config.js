@@ -1,7 +1,6 @@
 import EditorPage from "../pages/EditorPage";
 import HomePage from "../pages/HomePage";
-import AppLayout from "./app-layout";
-import EditorLayout from "./app-layout";
+import EditorLayout from "./editor-layout";
 import GlobalErrorBoundary from "./global-error-boundary";
 
 export const routeConfig = [
@@ -15,7 +14,7 @@ export const routeConfig = [
             },
             {
                 path: "editor",
-                element: <AppLayout />,
+                element: <EditorLayout />,
                 children: [
                     {
                         path: ":roomId",

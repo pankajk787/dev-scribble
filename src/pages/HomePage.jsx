@@ -9,7 +9,6 @@ const HomePage = () => {
     const navigate = useNavigate();
     const createNewRoom = () => {
         const roomId = uuidv4();
-        console.log({roomId});
         roomIdRef.current.value = roomId;
         toast.success("New room created!");        
     }
