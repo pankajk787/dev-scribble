@@ -14,6 +14,7 @@ const EditorLayout = () => {
   
     const [clients, setClients] = React.useState([]);
     const socketRef = useRef(null);
+    const codeRef = useRef(null);
 
     const coopyRoomId = async () => {
       try {
@@ -55,6 +56,11 @@ const EditorLayout = () => {
             }
 
             setClients(clients);
+
+            socketRef.current.emit(ACTIONS.SYNC_CODE, { // Sync the code to just joined user
+              socketId,
+              code: codeRef.current
+            })
           })
 
           socketRef.current.on(ACTIONS.DISCONNECTED, (data) => {
@@ -105,7 +111,7 @@ const EditorLayout = () => {
         </div>
       </aside>
       <main className="rightPanelWrapper">
-        <Outlet context={{ socketRef, roomId}}/>
+        <Outlet context={{ socketRef, roomId, codeRef }}/>
       </main>
     </div>
   );

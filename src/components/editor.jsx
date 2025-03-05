@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import MonacoEditor from '@monaco-editor/react';
 import ACTIONS from '../constants/actions';
 
-const Editor = ({ socketRef, roomId }) => {
+const Editor = ({ socketRef, roomId, onCodeChange }) => {
   const editorRef = useRef(null);
   const isProgrammaticUpdateRef = useRef(false);
 
@@ -19,6 +19,7 @@ const Editor = ({ socketRef, roomId }) => {
           code
         })
       }
+      onCodeChange(code);
     });
   } 
 

@@ -39,6 +39,11 @@ io.on('connection', (socket) => {
         socket.in(roomId).emit(ACTIONS.CODE_CHANGE, { code });
     });
 
+    socket.on(ACTIONS.SYNC_CODE, (data) => {
+        const { socketId, code } = data;
+        io.to(socketId).emit(ACTIONS.CODE_CHANGE, { code });
+    });
+
     socket.on('disconnecting', () => {
         const rooms = [...socket.rooms];
         // Notify all clients in the room that a user has disconnected
