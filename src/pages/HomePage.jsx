@@ -26,8 +26,8 @@ const HomePage = () => {
             return toast.error("Username is required!");
         if(username.length < 6)
             return toast.error("Username should be atleast 6 characters long!");
-
         navigate(`/editor/${roomId}`, {state: { username }});
+        // e.target.reset();
     }
 
   return (
@@ -45,8 +45,8 @@ const HomePage = () => {
                 <input ref={roomIdRef} type='text' placeholder='Room ID' className='inputField' name='roomId' required minLength={6}/>
                 <input type='text' placeholder='Username' className='inputField' name='username' required minLength={6}/>
                 <button className='joinBtn'>Join</button>
-                <span className='createInfo'>If you don't have an invite then create a  
-                    <button type='button' className='createNewBtn' onClick={createNewRoom}>new room</button>
+                <span className='createInfo'>If you don't have an invite then create a&nbsp; 
+                    <button type='button' className='createNewBtn' onClick={createNewRoom}> new room</button>
                 </span>
             </div>
         </form>

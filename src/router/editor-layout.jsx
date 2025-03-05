@@ -13,8 +13,22 @@ const EditorLayout = () => {
   const username = location.state.username;
   
     const [clients, setClients] = React.useState([]);
-
     const socketRef = useRef(null);
+
+    const coopyRoomId = async () => {
+      try {
+        await navigator.clipboard.writeText(roomId);
+        toast.success("Copied to your clipboard!");
+      } catch (e) {
+        toast.error("Copy failed! Please try again.");
+        console.error("Copy failed!", e);
+      }
+    }
+
+    const leaveRoom = async () => {
+      socketRef.current.disconnect();
+      navigate("/", { replace: true});
+    };
 
     useEffect(() => {
       (async function init() {
@@ -86,8 +100,8 @@ const EditorLayout = () => {
         </div>
         <ClientsList clients={clients} />
         <div className="btnGroupWrapper">
-            <button className="copyBtn">📋 Copy Room Id</button>
-            <button className="leaveBtn">← Leave Room</button>
+            <button className="copyBtn" onClick={coopyRoomId}>📋 Copy Room Id</button>
+            <button className="leaveBtn" onClick={leaveRoom}>← Leave Room</button>
         </div>
       </aside>
       <main className="rightPanelWrapper">
