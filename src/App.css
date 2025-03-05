@@ -43,8 +43,7 @@
 }
 
 .mainLabel {
-  margin-bottom: 14px;
-  margin-top: 0;
+  margin: 0 0 14px 10px;
 }
 
 .inputGroup {
@@ -76,7 +75,7 @@
   border-radius: 5px;
   cursor: pointer;
   transition: all 0.3s ease-in-out;
-  width: 100%;
+  width: 96%;
 }
 
 .joinBtn:hover {
