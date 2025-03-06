@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import MonacoEditor from '@monaco-editor/react';
 import ACTIONS from '../constants/actions';
 import { SUPPORTED_LANGUAGES } from './constants';
+import CanvasFreeDraw from '../containers/canavas-free-draw';
 import './style.css';
 
 const Editor = ({ socketRef, roomId, onCodeChange }) => {
@@ -92,6 +93,9 @@ const Editor = ({ socketRef, roomId, onCodeChange }) => {
       <div className='editor-header'>
         <div></div>
         <div>
+          <CanvasFreeDraw socketRef={socketRef} roomId={roomId} onCodeChange={handleCodeSync} />
+        </div>
+        <div>
           <select 
             value={selectedLanguage} name='language' id='language' className='editor-language-select'
             onChange={handleLanguageChange}
@@ -108,7 +112,7 @@ const Editor = ({ socketRef, roomId, onCodeChange }) => {
         </div>
       </div>
       <MonacoEditor
-        height="100vh"
+        height="95vh"
         // language="javascript"
         language={selectedLanguage}
         theme="vs-dark"

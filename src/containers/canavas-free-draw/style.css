@@ -1,0 +1,42 @@
+.canvasFreeDrawOverLay {
+    width: 100%;
+    height: 0;
+    background-color: #1e1d1d59;
+}
+
+.canvasFreeDrawOverLay.open {
+    height: 100vh;
+}
+.canvasFreeDrawContainer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 0px;
+    background-color: #fff;
+    color: #000;
+    z-index: 10;
+    transition: all 0.3s ease-in-out;
+}
+
+.canvasFreeDrawContainer.open {
+    height: 95vh;
+}
+
+.scrollTool {
+    position: relative;
+    top: -2px;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #fff;
+    padding: 4px 18px;
+    border-radius:  0px 0px 30px 30px;
+    font-size: 20px;
+    padding-bottom: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+}
+
+.scrollTool.open {
+    top: calc(95vh - 6px);
+}
