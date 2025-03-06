@@ -7,8 +7,8 @@ const EditorPage = () => {
 
   return (
     <div>
-      <Editor socketRef={socketRef} roomId={roomId} onCodeChange={(code) => {
-        codeRef.current = code;
+      <Editor socketRef={socketRef} roomId={roomId} onCodeChange={({code, language}) => {
+        codeRef.current = { code, language };
       }} />
     </div>
   )

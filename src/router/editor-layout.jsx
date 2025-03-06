@@ -5,6 +5,7 @@ import ClientsList from "../containers/clients-list";
 import { initSocket } from "../socket";
 import ACTIONS from "../constants/actions";
 import toast from "react-hot-toast";
+import { SUPPORTED_LANGUAGES } from "../components/constants";
 
 const EditorLayout = () => {
   const navigate = useNavigate();
@@ -16,7 +17,7 @@ const EditorLayout = () => {
     const socketRef = useRef(null);
     const codeRef = useRef(null);
 
-    const coopyRoomId = async () => {
+    const copyRoomId = async () => {
       try {
         await navigator.clipboard.writeText(roomId);
         toast.success("Copied to your clipboard!");
@@ -49,18 +50,22 @@ const EditorLayout = () => {
             roomId, username
           })
 
-          socketRef.current.on(ACTIONS.JOINED, (data) => {
+          socketRef.current.on(ACTIONS.JOINED, async (data) => {
             const { clients, username: joinedUserName, socketId } = data;
             if(joinedUserName !== username) {
               toast.success(`${joinedUserName} joined the room!`);
             }
 
             setClients(clients);
-
-            socketRef.current.emit(ACTIONS.SYNC_CODE, { // Sync the code to just joined user
-              socketId,
-              code: codeRef.current
-            })
+            
+            await new Promise((resolve) => setTimeout(resolve, 1000)); // Wait for 1 second- after that sync code so that other users editor is initialized
+            if(codeRef.current?.code) {
+              socketRef.current.emit(ACTIONS.SYNC_CODE, { // Sync the code to just joined user
+                socketId,
+                code: codeRef.current?.code || "",
+                language: codeRef.current?.language || SUPPORTED_LANGUAGES[0].value
+              })
+            }
           })
 
           socketRef.current.on(ACTIONS.DISCONNECTED, (data) => {
@@ -106,7 +111,7 @@ const EditorLayout = () => {
         </div>
         <ClientsList clients={clients} />
         <div className="btnGroupWrapper">
-            <button className="copyBtn" onClick={coopyRoomId}>📋 Copy Room Id</button>
+            <button className="copyBtn" onClick={copyRoomId}>📋 Copy Room Id</button>
             <button className="leaveBtn" onClick={leaveRoom}>← Leave Room</button>
         </div>
       </aside>

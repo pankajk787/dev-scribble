@@ -35,13 +35,13 @@ io.on('connection', (socket) => {
     })
 
     socket.on(ACTIONS.CODE_CHANGE, (data) => {
-        const { roomId, code } = data;
-        socket.in(roomId).emit(ACTIONS.CODE_CHANGE, { code });
+        const { roomId, code, language } = data;
+        socket.in(roomId).emit(ACTIONS.CODE_CHANGE, { code, language });
     });
 
     socket.on(ACTIONS.SYNC_CODE, (data) => {
-        const { socketId, code } = data;
-        io.to(socketId).emit(ACTIONS.CODE_CHANGE, { code });
+        const { socketId, code, language } = data;
+        io.to(socketId).emit(ACTIONS.CODE_CHANGE, { code, language });
     });
 
     socket.on('disconnecting', () => {
