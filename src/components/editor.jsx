@@ -41,23 +41,38 @@ const Editor = ({ socketRef, roomId, onCodeChange }) => {
       }
       onCodeChange({code, language: languageRef.current});
     });
-  } 
+  }
+
+  const handleCodeSync = async (code) => {
+    if(editorRef.current && code != null) {
+      await new Promise((resolve) => { // Waiting for the editor to be ready
+        setTimeout(() => {
+          resolve();
+        }, 10);
+      });
+
+      isProgrammaticUpdateRef.current = true;
+      editorRef.current.setValue(code);
+      isProgrammaticUpdateRef.current = false;
+    }
+  }
 
   useEffect(() => {
     if(socketRef.current) {
-      const handleCodeChange = ({ code, language }) => {
+      const handleCodeChange = ({ code, language, isCodeSync }) => {
         if(language && language !== languageRef.current) {
           languageRef.current = language;
           setSelectedLanguage(language);
         }
-        isProgrammaticUpdateRef.current = true;
-        editorRef.current?.setValue(code);
-        isProgrammaticUpdateRef.current = false;
-
-        if(editorRef.current && code != null) {
-          isProgrammaticUpdateRef.current = true;
-          editorRef.current.setValue(code);
-          isProgrammaticUpdateRef.current = false;
+        if(isCodeSync) {
+            handleCodeSync(code);
+        }
+        else {
+          if(editorRef.current && code != null) {
+            isProgrammaticUpdateRef.current = true;
+            editorRef.current.setValue(code);
+            isProgrammaticUpdateRef.current = false;
+          }
         }
       }
 

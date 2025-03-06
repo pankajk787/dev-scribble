@@ -41,7 +41,7 @@ io.on('connection', (socket) => {
 
     socket.on(ACTIONS.SYNC_CODE, (data) => {
         const { socketId, code, language } = data;
-        io.to(socketId).emit(ACTIONS.CODE_CHANGE, { code, language });
+        io.to(socketId).emit(ACTIONS.CODE_CHANGE, { code, language, isCodeSync: true });
     });
 
     socket.on('disconnecting', () => {
