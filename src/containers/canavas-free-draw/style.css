@@ -24,10 +24,11 @@
 }
 
 .scrollTool {
-    position: relative;
-    top: -2px;
+    position: fixed;
+    top: 14px;
     left: 50%;
     transform: translate(-50%, -50%);
+    z-index: 10;
     background-color: #fff;
     padding: 4px 18px;
     border-radius:  0px 0px 30px 30px;
@@ -38,5 +39,5 @@
 }
 
 .scrollTool.open {
-    top: calc(95vh - 6px);
+    top: calc(95vh + 12px);
 }
