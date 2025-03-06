@@ -11,7 +11,7 @@ const EditorLayout = () => {
   const navigate = useNavigate();
   const roomId = useParams().roomId;
   const location = useLocation();
-  const username = location.state.username;
+  const username = location.state?.username;
   
     const [clients, setClients] = React.useState([]);
     const socketRef = useRef(null);
