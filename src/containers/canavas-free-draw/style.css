@@ -27,12 +27,12 @@
 .scrollTool {
     position: relative;
     top: -20px;
-    left: 50%;
+    left: calc(50% - 45px);
     transform: translate(-50%, -50%);
     z-index: 10;
     background-color: #fff;
     padding: 4px 18px;
-    border-radius:  0px 0px 30px 30px;
+    border-radius:  0px 0px 35px 35px;
     font-size: 20px;
     padding-bottom: 8px;
     cursor: pointer;
