@@ -103,6 +103,7 @@ button {
   width: 100%;
   text-align: center;
   color: #fff;
+  font-size: 14px;
 }
 
 .appFooter a {
@@ -133,8 +134,8 @@ main.rightPanelWrapper {
 .dashedBorderBottom {
   border-bottom: 1px dashed #585757;
 }
-.logoWrapper.dashedBorderBottom {
-  padding: 20px 0;
+.leftPanelLogoWrapper.dashedBorderBottom {
+  margin: 20px 0;
 }
 
 .btnGroupWrapper {

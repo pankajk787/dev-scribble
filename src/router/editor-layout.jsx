@@ -1,11 +1,11 @@
 import React, { useEffect, useRef } from "react";
 import { Outlet, useParams, useLocation, useNavigate, Navigate } from "react-router-dom";
-import CodeSyncLogo from "../assets/code-sync-logo.png";
 import ClientsList from "../containers/clients-list";
 import { initSocket } from "../socket";
 import ACTIONS from "../constants/actions";
 import toast from "react-hot-toast";
 import { SUPPORTED_LANGUAGES } from "../components/constants";
+import DevScribbleLogo from "../components/logo";
 
 const EditorLayout = () => {
   const navigate = useNavigate();
@@ -117,12 +117,8 @@ const EditorLayout = () => {
   return (
     <div className="appLayoutWrapper">
       <aside className="leftPanelWrapper">
-        <div className="logoWrapper dashedBorderBottom">
-          <img src={CodeSyncLogo} alt="code-sync-logo" className="logoImage" />
-          <div className="logoTextWrapper">
-            <div className="logoText">Code Sync</div>
-            <div className="logoTagLine">Realtime collaboration</div>
-          </div>
+        <div className="leftPanelLogoWrapper dashedBorderBottom">
+          <DevScribbleLogo />
         </div>
         <ClientsList clients={clients} />
         <div className="btnGroupWrapper">

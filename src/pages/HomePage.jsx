@@ -1,8 +1,9 @@
 import React from 'react';
 import { v4 as uuidv4 } from 'uuid';
-import CodeSyncLogo from '../assets/code-sync-logo.png';
+
 import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
+import DevScribbleLogo from '../components/logo';
 
 const HomePage = () => {
     const roomIdRef = React.useRef();
@@ -33,13 +34,7 @@ const HomePage = () => {
   return (
     <div className='homePageWrapper'>
         <form className='formWrapper' onSubmit={handleSubmit}>
-            <div className='logoWrapper'>
-                <img src={CodeSyncLogo} alt='code-sync-logo' className='logoImage'/>
-                <div className='logoTextWrapper'>
-                    <div className='logoText'>Code Sync</div>
-                    <div className='logoTagLine'>Realtime collaboration</div>
-                </div>
-            </div>
+            <DevScribbleLogo />
             <h4 className='mainLabel'>Paste invitation Room ID</h4>
             <div className='inputGroup'>
                 <input ref={roomIdRef} type='text' placeholder='Room ID' className='inputField' name='roomId' required minLength={6}/>

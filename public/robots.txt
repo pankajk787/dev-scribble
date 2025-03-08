@@ -1,3 +1,7 @@
-# https://www.robotstxt.org/robotstxt.html
 User-agent: *
-Disallow:
+Disallow: /api/
+Disallow: /private/
+Disallow: /admin/
+Allow: /
+
+Sitemap: https://www.devscribble.ai/sitemap.xml
