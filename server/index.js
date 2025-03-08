@@ -44,6 +44,16 @@ io.on('connection', (socket) => {
         io.to(socketId).emit(ACTIONS.CODE_CHANGE, { code, language, isCodeSync: true });
     });
 
+    socket.on(ACTIONS.CANVAS_CHANGE, (data) => {
+        const { roomId, canvasContent, senderId } = data;
+        io.to(roomId).emit(ACTIONS.CANVAS_CHANGE, { canvasContent, senderId });
+    });
+
+    socket.on(ACTIONS.SYNC_CANVAS_CONTENT, (data) => {
+        const { socketId, canvasContent, senderId } = data;
+        io.to(socketId).emit(ACTIONS.CANVAS_CHANGE, { canvasContent, senderId, isCanvasSync: true });
+    });
+
     socket.on('disconnecting', () => {
         const rooms = [...socket.rooms];
         // Notify all clients in the room that a user has disconnected

@@ -1,10 +1,13 @@
 import React, { useEffect, useState, useRef } from "react";
+import { useOutletContext } from "react-router-dom";
 import CanvasToolbar from "./canvas-toolbar";
 import { FaPenNib } from "react-icons/fa";
 import { fabric } from "fabric";
+import ACTIONS from "../../constants/actions";
 import "./style.css";
 
-const CanvasFreeDraw = ({ socketRef }) => {
+const CanvasFreeDraw = ({ socketRef, roomId }) => {
+  const { canvasContentRef } = useOutletContext();
   const [open, setOpen] = useState(false);
   const [tool, setTool] = useState("select");
   const canvasRef = useRef(null);
@@ -35,14 +38,7 @@ const CanvasFreeDraw = ({ socketRef }) => {
     resizeCanvas();
     window.addEventListener("resize", resizeCanvas);
 
-    socketRef.current?.on("canvas-update", (data) => {
-      fabricCanvas.loadFromJSON(data);
-    });
-
-    // fabricCanvas.loadFromJSON(data);
-
     return () => {
-      socketRef.current?.off("canvas-update");
       window.removeEventListener("resize", resizeCanvas);
     };
   }, []);
@@ -211,8 +207,9 @@ const CanvasFreeDraw = ({ socketRef }) => {
     shape.current = null;
 
     isDrawing.current = false;
-
-    socketRef.current?.emit("canvas-update", fabricCanvasRef.current.toJSON());
+    const canvasContent = fabricCanvasRef.current.toJSON();
+    canvasContentRef.current = canvasContent;
+    socketRef.current?.emit(ACTIONS.CANVAS_CHANGE, { roomId, senderId: socketRef.current.id, canvasContent });
 
     if (["rectangle", "circle", "arrow"].includes(tool)) {
       setTimeout(() => {
@@ -241,34 +238,47 @@ const CanvasFreeDraw = ({ socketRef }) => {
     };
   }, [tool]);
 
+  const handleCanvasSync = async (canvasContent) => {
+    await new Promise((resolve) => { // Waiting for the canvas to be ready
+      setTimeout(() => {
+        resolve();
+      }, 10);
+    });
+    fabricCanvasRef.current.loadFromJSON(canvasContent);
+  }
+
+  useEffect(() => {
+    const handleCanvasChange = ({ canvasContent, senderId, isCanvasSync }) => {
+      if(senderId === socketRef.current.id) return; // Ignore the sync from self
+
+      if(isCanvasSync) {
+        handleCanvasSync(canvasContent);
+      }
+      else {
+        if(fabricCanvasRef.current) {
+          fabricCanvasRef.current.loadFromJSON(canvasContent);
+        }
+      }
+    }
+
+    if(socketRef.current) {
+      // Listen to ACTIONS.CANVAS_CHANGE
+      socketRef.current.on(ACTIONS.CANVAS_CHANGE, handleCanvasChange);
+    }
+
+    return () => {
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+      if(socketRef.current) {
+        socketRef.current.off(ACTIONS.CANVAS_CHANGE, handleCanvasChange);
+      }
+    }
+  }, [socketRef.current, fabricCanvasRef.current]);
+
   return (
     <>
       <div className={`canvasFreeDrawOverLay ${open ? "open" : ""}`}>
         <div className={`canvasFreeDrawContainer ${open ? "open" : ""}`}>
           <div style={{ display: open ? "block" : "none" }}>
-            {/* <div className="toolBar">
-              {toolButtons.map(({ title, value, icon }) => (
-                <button
-                  key={value}
-                  title={title}
-                  className={`toolBtn ${tool === value ? "activeTool" : ""}`}
-                  onClick={() => handleToolChange(value)}
-                >
-                  {icon}
-                </button>
-              ))}
-              <button
-                onClick={() =>
-                  console.log(
-                    "Canvas Json:::",
-                    fabricCanvasRef.current.toJSON()
-                  )
-                }
-              >
-                {" "}
-                Get Current Canvas{" "}
-              </button>
-            </div> */}
             <CanvasToolbar tool={tool} handleToolChange={handleToolChange} />
             <canvas
               ref={canvasRef}

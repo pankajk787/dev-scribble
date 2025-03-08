@@ -16,6 +16,7 @@ const EditorLayout = () => {
     const [clients, setClients] = React.useState([]);
     const socketRef = useRef(null);
     const codeRef = useRef(null);
+    const canvasContentRef = useRef(null);
 
     const copyRoomId = async () => {
       try {
@@ -27,9 +28,16 @@ const EditorLayout = () => {
       }
     }
 
-    const leaveRoom = async () => {
+    const onLeaveConfirm = async () => {
       socketRef.current.disconnect();
       navigate("/", { replace: true});
+    }
+
+    const leaveRoom = async () => {
+      const confirmed = window.confirm("Are you sure you want to leave the room?");
+      if(confirmed) {
+        onLeaveConfirm();
+      }
     };
 
     useEffect(() => {
@@ -64,6 +72,13 @@ const EditorLayout = () => {
                 socketId,
                 code: codeRef.current?.code || "",
                 language: codeRef.current?.language || SUPPORTED_LANGUAGES[0].value
+              })
+            }
+            if(canvasContentRef.current) {
+              socketRef.current.emit(ACTIONS.SYNC_CANVAS_CONTENT, {
+                socketId,
+                senderId: socketRef.current.id,
+                canvasContent: canvasContentRef.current
               })
             }
           })
@@ -116,7 +131,7 @@ const EditorLayout = () => {
         </div>
       </aside>
       <main className="rightPanelWrapper">
-        <Outlet context={{ socketRef, roomId, codeRef }}/>
+        <Outlet context={{ socketRef, roomId, codeRef, canvasContentRef }}/>
       </main>
     </div>
   );

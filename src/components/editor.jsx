@@ -59,31 +59,30 @@ const Editor = ({ socketRef, roomId, onCodeChange }) => {
   }
 
   useEffect(() => {
-    if(socketRef.current) {
-      const handleCodeChange = ({ code, language, isCodeSync }) => {
-        if(language && language !== languageRef.current) {
-          languageRef.current = language;
-          setSelectedLanguage(language);
-        }
-        if(isCodeSync) {
-            handleCodeSync(code);
-        }
-        else {
-          if(editorRef.current && code != null) {
-            isProgrammaticUpdateRef.current = true;
-            editorRef.current.setValue(code);
-            isProgrammaticUpdateRef.current = false;
-          }
+    const handleCodeChange = ({ code, language, isCodeSync }) => {
+      if(language && language !== languageRef.current) {
+        languageRef.current = language;
+        setSelectedLanguage(language);
+      }
+      if(isCodeSync) {
+          handleCodeSync(code);
+      }
+      else {
+        if(editorRef.current && code != null) {
+          isProgrammaticUpdateRef.current = true;
+          editorRef.current.setValue(code);
+          isProgrammaticUpdateRef.current = false;
         }
       }
-
+    }
+    if(socketRef.current) {
       // Listen to ACTIONS.CODE_CHANGE
       socketRef.current.on(ACTIONS.CODE_CHANGE, handleCodeChange);
-      return () => {
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-        if(socketRef.current) {
-          socketRef.current.off(ACTIONS.CODE_CHANGE, handleCodeChange);
-        }
+    }
+    return () => {
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+      if(socketRef.current) {
+        socketRef.current.off(ACTIONS.CODE_CHANGE, handleCodeChange);
       }
     }
   }, [socketRef.current, editorRef.current]);
@@ -93,7 +92,7 @@ const Editor = ({ socketRef, roomId, onCodeChange }) => {
       <div className='editor-header'>
         <div></div>
         <div>
-          <CanvasFreeDraw socketRef={socketRef} roomId={roomId} onCodeChange={handleCodeSync} />
+          <CanvasFreeDraw socketRef={socketRef} roomId={roomId} />
         </div>
         <div>
           <select 
