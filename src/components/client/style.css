@@ -7,8 +7,7 @@
 }
 
 .connectedUserWrapper span {
-    border-radius: 5px;
-    background-color: rgba(255, 0, 174, 0.973);
+    border-radius: 50%;
     font-size: 25px;
     font-weight: bold;
     width: 46px;
@@ -16,4 +15,13 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    padding: 24px;
+}
+
+.connectedUserName {
+    font-size: 14px;
+}
+
+.connectedUserName span {
+    font-size: 12px;
 }

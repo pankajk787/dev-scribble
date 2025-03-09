@@ -120,7 +120,7 @@ const EditorLayout = () => {
         <div className="leftPanelLogoWrapper dashedBorderBottom">
           <DevScribbleLogo />
         </div>
-        <ClientsList clients={clients} />
+        <ClientsList clients={clients} currentUserSocketId={socketRef.current?.id} />
         <div className="btnGroupWrapper">
             <button className="copyBtn" onClick={copyRoomId}>📋 Copy Room Id</button>
             <button className="leaveBtn" onClick={leaveRoom}>← Leave Room</button>
