@@ -5,7 +5,11 @@ import { FaPenNib } from "react-icons/fa";
 import { fabric } from "fabric";
 import ACTIONS from "../../constants/actions";
 import "./style.css";
-
+const INITIAL_STROKE_SETTINGS = {
+  strokeColor: "#000000",
+  strokeType: "solid",
+  strokeWidth: 2,
+}
 const CanvasFreeDraw = ({ socketRef, roomId }) => {
   const { canvasContentRef } = useOutletContext();
   const [open, setOpen] = useState(false);
@@ -16,7 +20,7 @@ const CanvasFreeDraw = ({ socketRef, roomId }) => {
   const startX = useRef(0);
   const startY = useRef(0);
   const shape = useRef(null);
-  const strokeColorRef = useRef("#000000");
+  const strokeRef = useRef(INITIAL_STROKE_SETTINGS);
 
   useEffect(() => {
     const fabricCanvas = new fabric.Canvas(canvasRef.current, {
@@ -58,7 +62,9 @@ const CanvasFreeDraw = ({ socketRef, roomId }) => {
     if (!fabricCanvasRef.current) return;
     const canvas = fabricCanvasRef.current;
     const { offsetX, offsetY } = event.e;
-    canvas.freeDrawingBrush.color = strokeColorRef.current;
+    canvas.freeDrawingBrush.color = strokeRef.current.strokeColor;
+    canvas.freeDrawingBrush.width = strokeRef.current.strokeWidth;
+    canvas.freeDrawingBrush.dashed = strokeRef.current.strokeType === "dashed";
 
     if (tool === "rectangle") {
       isDrawing.current = true;
@@ -70,8 +76,9 @@ const CanvasFreeDraw = ({ socketRef, roomId }) => {
         width: 0,
         height: 0,
         fill: "transparent",
-        stroke: strokeColorRef.current,
-        strokeWidth: 2,
+        stroke: strokeRef.current.strokeColor,
+        strokeWidth: strokeRef.current.strokeWidth,
+        strokeDashArray: strokeRef.current.strokeType === "dashed" ? [5, 5] : undefined,
       });
       canvas.add(shape.current);
     } else if (tool === "circle") {
@@ -84,8 +91,9 @@ const CanvasFreeDraw = ({ socketRef, roomId }) => {
         rx: 0,
         ry: 0,
         fill: "transparent",
-        stroke: strokeColorRef.current,
-        strokeWidth: 2,
+        stroke: strokeRef.current.strokeColor,
+        strokeWidth: strokeRef.current.strokeWidth,
+        strokeDashArray: strokeRef.current.strokeType === "dashed" ? [5, 5] : undefined,
       });
       canvas.add(shape.current);
     }
@@ -95,8 +103,9 @@ const CanvasFreeDraw = ({ socketRef, roomId }) => {
       startY.current = offsetY;
 
       shape.current = new fabric.Line([offsetX, offsetY, offsetX, offsetY], {
-        stroke: strokeColorRef.current,
-        strokeWidth: 3,
+        stroke: strokeRef.current.strokeColor,
+        strokeWidth: strokeRef.current.strokeWidth,
+        strokeDashArray: strokeRef.current.strokeType === "dashed" ? [5, 5] : undefined,
         selectable: false,
       });
       canvas.add(shape.current);
@@ -110,7 +119,7 @@ const CanvasFreeDraw = ({ socketRef, roomId }) => {
         left: offsetX,
         top: offsetY,
         fontSize: 18,
-        fill: strokeColorRef.current,
+        fill: strokeRef.current.strokeColor,
       });
       canvas.add(text);
       canvas.setActiveObject(text);
@@ -184,15 +193,17 @@ const CanvasFreeDraw = ({ socketRef, roomId }) => {
         angle: angle + 90,
         width: arrowSize * 2,
         height: arrowSize * 2,
-        fill: strokeColorRef.current,
+        fill: strokeRef.current.strokeColor
       });
 
       // Create final arrow as a group
       const arrow = new fabric.Group(
         [
           new fabric.Line([x1, y1, x2, y2], {
-            stroke: strokeColorRef.current,
-            strokeWidth: 3,
+            stroke: strokeRef.current.strokeColor,
+            fill: strokeRef.current.strokeColor,
+            strokeWidth: strokeRef.current.strokeWidth,
+            strokeDashArray: strokeRef.current.strokeType === "dashed" ? [5, 5] : undefined,
             selectable: true,
           }),
           arrowHead,
@@ -284,7 +295,7 @@ const CanvasFreeDraw = ({ socketRef, roomId }) => {
             <CanvasToolbar
               tool={tool} 
               handleToolChange={handleToolChange} 
-              strokeColorRef={strokeColorRef}
+              strokeRef={strokeRef}
             />
             <canvas
               ref={canvasRef}

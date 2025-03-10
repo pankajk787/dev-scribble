@@ -46,6 +46,7 @@
 .toolBar {
     display: flex;
     justify-content: center;
+    position: relative;
 }
 .toolBtn {
     padding: 4px 10px;
@@ -55,4 +56,53 @@
 
 .toolBtn.activeTool {
     background-color: rgba(21, 0, 255, 0.33);
+}
+
+.toolSettingWrapper {
+    position: relative;
+}
+
+.toolSettings {
+    padding: 10px;
+    background-color: #000;
+    border-radius: 7px;
+    color: #fff;
+    position: absolute;
+    top: -100px;
+    z-index: 10;
+    min-width: 200px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    transition: all 0.2s ease-in-out;
+}
+.toolSettings.open {
+    top: 30px;
+}
+.toolSettingRow {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    justify-content: space-between;
+}
+.toolSettingRow select {
+    border-radius: 4px;
+    text-align: center;
+    font-size: 18px;
+}
+
+.strokeWidth-1 {
+    font-size: 12px;
+}
+
+.strokeWidth-2 {
+    font-size: 14px;
+}
+
+.strokeWidth-3 {
+    font-size: 18px;
+}
+.strokeWidth-3 {
+    font-size: 18px;
+    font-weight: 600;
 }
