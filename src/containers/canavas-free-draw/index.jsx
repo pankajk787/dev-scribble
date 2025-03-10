@@ -308,7 +308,7 @@ const CanvasFreeDraw = ({ socketRef, roomId }) => {
           className={`scrollTool ${open ? "open" : ""}`}
           onClick={() => setOpen((prev) => !prev)}
         >
-          <FaPenNib />
+          <FaPenNib className={ `scrollToolIcon ${open ? "open" : ""}`} />
         </button>
       </div>
     </>
