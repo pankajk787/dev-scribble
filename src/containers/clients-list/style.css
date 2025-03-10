@@ -4,3 +4,8 @@
     flex-wrap: wrap;
     margin-top: 16px;
 }
+.colorPicker {
+    border: none;
+    width: 25px;
+    cursor: pointer;
+}

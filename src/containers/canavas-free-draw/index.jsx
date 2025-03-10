@@ -16,6 +16,7 @@ const CanvasFreeDraw = ({ socketRef, roomId }) => {
   const startX = useRef(0);
   const startY = useRef(0);
   const shape = useRef(null);
+  const strokeColorRef = useRef("#000000");
 
   useEffect(() => {
     const fabricCanvas = new fabric.Canvas(canvasRef.current, {
@@ -57,6 +58,7 @@ const CanvasFreeDraw = ({ socketRef, roomId }) => {
     if (!fabricCanvasRef.current) return;
     const canvas = fabricCanvasRef.current;
     const { offsetX, offsetY } = event.e;
+    canvas.freeDrawingBrush.color = strokeColorRef.current;
 
     if (tool === "rectangle") {
       isDrawing.current = true;
@@ -68,7 +70,7 @@ const CanvasFreeDraw = ({ socketRef, roomId }) => {
         width: 0,
         height: 0,
         fill: "transparent",
-        stroke: "black",
+        stroke: strokeColorRef.current,
         strokeWidth: 2,
       });
       canvas.add(shape.current);
@@ -82,7 +84,7 @@ const CanvasFreeDraw = ({ socketRef, roomId }) => {
         rx: 0,
         ry: 0,
         fill: "transparent",
-        stroke: "black",
+        stroke: strokeColorRef.current,
         strokeWidth: 2,
       });
       canvas.add(shape.current);
@@ -93,7 +95,7 @@ const CanvasFreeDraw = ({ socketRef, roomId }) => {
       startY.current = offsetY;
 
       shape.current = new fabric.Line([offsetX, offsetY, offsetX, offsetY], {
-        stroke: "black",
+        stroke: strokeColorRef.current,
         strokeWidth: 3,
         selectable: false,
       });
@@ -108,7 +110,7 @@ const CanvasFreeDraw = ({ socketRef, roomId }) => {
         left: offsetX,
         top: offsetY,
         fontSize: 18,
-        fill: "black",
+        fill: strokeColorRef.current,
       });
       canvas.add(text);
       canvas.setActiveObject(text);
@@ -182,14 +184,14 @@ const CanvasFreeDraw = ({ socketRef, roomId }) => {
         angle: angle + 90,
         width: arrowSize * 2,
         height: arrowSize * 2,
-        fill: "black",
+        fill: strokeColorRef.current,
       });
 
       // Create final arrow as a group
       const arrow = new fabric.Group(
         [
           new fabric.Line([x1, y1, x2, y2], {
-            stroke: "black",
+            stroke: strokeColorRef.current,
             strokeWidth: 3,
             selectable: true,
           }),
@@ -279,7 +281,11 @@ const CanvasFreeDraw = ({ socketRef, roomId }) => {
       <div className={`canvasFreeDrawOverLay ${open ? "open" : ""}`}>
         <div className={`canvasFreeDrawContainer ${open ? "open" : ""}`}>
           <div style={{ display: open ? "block" : "none" }}>
-            <CanvasToolbar tool={tool} handleToolChange={handleToolChange} />
+            <CanvasToolbar
+              tool={tool} 
+              handleToolChange={handleToolChange} 
+              strokeColorRef={strokeColorRef}
+            />
             <canvas
               ref={canvasRef}
               className="canvasFreeDraw"

@@ -1,7 +1,7 @@
 import React from "react";
 import { TOOL_BUTTONS } from "../../constants/editor-constants";
 
-const CanvasToolbar = ({ tool, handleToolChange}) => {
+const CanvasToolbar = ({ tool, handleToolChange, strokeColorRef}) => {
   return (
     <div className="toolBar">
       {TOOL_BUTTONS.map(({ title, value, icon }) => (
@@ -14,6 +14,13 @@ const CanvasToolbar = ({ tool, handleToolChange}) => {
           {icon}
         </button>
       ))}
+      <input 
+        title="Stroke Color"
+        className="colorPicker" 
+        type="color" 
+        defaultValue={"#000000"}
+        onChange={(e) => strokeColorRef.current = e.target.value}
+      />
     </div>
   );
 };
