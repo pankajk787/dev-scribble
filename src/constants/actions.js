@@ -1,6 +1,7 @@
 const ACTIONS = {
     JOIN: 'join',
     JOINED: 'joined',
+    SELF_JOINED: 'self-joined',
     DISCONNECTED: 'disconnected',
     LEAVE: 'leave',
     CODE_CHANGE: 'code-change',

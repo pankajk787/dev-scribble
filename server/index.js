@@ -1,13 +1,18 @@
 const express = require('express');
 const app = express();
 const http = require('http');
+const cors = require('cors');
 const { Server } = require('socket.io');
 const ACTIONS = require('../src/constants/actions');
+
+app.use(express.json());
+app.use(cors()); // TODO: DO proper CORS setup
 
 const server = http.createServer(app);
 const io = new Server(server);
 
-const userSocketMap = {}; // Currently using In memory data - may store in DB later
+const userSocketMap = {}; // TODO: Currently using In memory data - may store in DB later
+const roomCreatorMap = {}; // TODO: Currently using In memory data - may store in DB later
 
 function getAllConnectedClients(roomId) {
     return Array.from(io.sockets.adapter.rooms.get(roomId) || []).map((clientSocketId)=> {
@@ -23,6 +28,14 @@ io.on('connection', (socket) => {
         const { roomId, username } = data;
         userSocketMap[socket.id] = username;
         socket.join(roomId);
+        if(!roomCreatorMap[roomId]) {
+            roomCreatorMap[roomId] = socket.id;
+            io.to(socket.id).emit(ACTIONS.SELF_JOINED, { isCreator: true });
+        }
+        else {
+            io.to(socket.id).emit(ACTIONS.SELF_JOINED, { isCreator: false });
+        }
+
         const clients = getAllConnectedClients(roomId);
         clients.forEach((client) => {
             // Notify all clients in the room that a new user has joined
@@ -58,9 +71,15 @@ io.on('connection', (socket) => {
         const rooms = [...socket.rooms];
         // Notify all clients in the room that a user has disconnected
         rooms.forEach((roomId) => {
+            let createrDisConnection = false;
+            if(roomCreatorMap[roomId] === socket.id) {
+                createrDisConnection = true;
+                delete roomCreatorMap[roomId];
+            }
             socket.in(roomId).emit(ACTIONS.DISCONNECTED, {
                 socketId: socket.id,
-                username: userSocketMap[socket.id] || 'Unknown User'
+                username: userSocketMap[socket.id] || 'Unknown User',
+                isCreator: createrDisConnection // sent whether creator of the room has disconnected
             })
         })
 
@@ -68,6 +87,23 @@ io.on('connection', (socket) => {
         socket.leave();
     });
 });
+
+// http routes
+app.get('/health', (req, res) => {
+    res.json({ healthy: true, status: "ok" });
+})
+
+app.get('/get-self', (req, res) => {
+    const { socket_id, room_id } = req.query;
+    if(socket_id && room_id) {
+        const username = userSocketMap[socket_id];
+        if(!username) return res.status(404).json({ message: 'Invalid request' })
+        if(!roomCreatorMap[room_id]) return res.status(400).json({ message: 'Invalid request' })
+        const is_creator = roomCreatorMap[room_id] === socket_id;
+        return res.json({ username, is_creator, socket_id, room_id })
+    }
+    return res.status(400).json({ message: 'Invalid request' })
+})
 
 const PORT = process.env.PORT || 5000;
 server.listen(PORT, () => {

@@ -3,6 +3,7 @@ import MonacoEditor from '@monaco-editor/react';
 import ACTIONS from '../constants/actions';
 import { SUPPORTED_LANGUAGES } from './constants';
 import CanvasFreeDraw from '../containers/canavas-free-draw';
+import useSelfDetailsStore from '../store/self-details-slice';
 import './style.css';
 
 const Editor = ({ socketRef, roomId, onCodeChange }) => {
@@ -11,6 +12,7 @@ const Editor = ({ socketRef, roomId, onCodeChange }) => {
   const isProgrammaticUpdateRef = useRef(false);
   const languageRef = useRef(SUPPORTED_LANGUAGES[0].value); // As 
   const [selectedLanguage, setSelectedLanguage] = useState(SUPPORTED_LANGUAGES[0].value);
+  const selfDetails = useSelfDetailsStore((state) => state.selfDetails);
 
   const handleLanguageChange = (e) => {
     const newLanguage = e.target.value;
@@ -96,8 +98,10 @@ const Editor = ({ socketRef, roomId, onCodeChange }) => {
         </div>
         <div>
           <select 
+            disabled={!selfDetails?.isCreator}
             value={selectedLanguage} name='language' id='language' className='editor-language-select'
             onChange={handleLanguageChange}
+            style={{ cursor: selfDetails?.isCreator ? "pointer" : "not-allowed" }}
           >
             {SUPPORTED_LANGUAGES.map(({ name, value }) => (
               <option key={value} 

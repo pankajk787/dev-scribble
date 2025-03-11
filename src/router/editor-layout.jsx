@@ -4,8 +4,11 @@ import ClientsList from "../containers/clients-list";
 import { initSocket } from "../socket";
 import ACTIONS from "../constants/actions";
 import toast from "react-hot-toast";
+import { VscDebugDisconnect } from "react-icons/vsc";
 import { SUPPORTED_LANGUAGES } from "../components/constants";
+import useSelfDetailsStore from "../store/self-details-slice";
 import DevScribbleLogo from "../components/logo";
+import RoomButtons from "../components/room-buttons";
 
 const EditorLayout = () => {
   const navigate = useNavigate();
@@ -17,28 +20,7 @@ const EditorLayout = () => {
     const socketRef = useRef(null);
     const codeRef = useRef(null);
     const canvasContentRef = useRef(null);
-
-    const copyRoomId = async () => {
-      try {
-        await navigator.clipboard.writeText(roomId);
-        toast.success("Copied to your clipboard!");
-      } catch (e) {
-        toast.error("Copy failed! Please try again.");
-        console.error("Copy failed!", e);
-      }
-    }
-
-    const onLeaveConfirm = async () => {
-      socketRef.current.disconnect();
-      navigate("/", { replace: true});
-    }
-
-    const leaveRoom = async () => {
-      const confirmed = window.confirm("Are you sure you want to leave the room?");
-      if(confirmed) {
-        onLeaveConfirm();
-      }
-    };
+    const setSelfDetails = useSelfDetailsStore((state) => state.setSelfDetails);
 
     useEffect(() => {
       (async function init() {
@@ -83,8 +65,17 @@ const EditorLayout = () => {
             }
           })
 
+          socketRef.current.on(ACTIONS.SELF_JOINED, (data) => {
+            const { isCreator } = data;
+            setSelfDetails(data);
+          })
+
           socketRef.current.on(ACTIONS.DISCONNECTED, (data) => {
-            const { username: disconnectedUserName, socketId } = data;
+            const { username: disconnectedUserName, socketId, isCreator } = data;
+            if(isCreator) { // If user disconnected is creator of the room
+              toast.success(`Session Ended!`, { icon: <VscDebugDisconnect /> });
+              navigate("/", { replace: true});
+            }
             if(disconnectedUserName !== username) {
               toast.success(`${disconnectedUserName} left the room!`);
             }
@@ -102,6 +93,7 @@ const EditorLayout = () => {
         if(socketRef.current) {
           socketRef.current.disconnect();
           socketRef.current.off(ACTIONS.JOINED);
+          socketRef.current.off(ACTIONS.SELF_JOINED);
           socketRef.current.off(ACTIONS.DISCONNECTED);
           socketRef.current.off('connect_error');
           socketRef.current.off('connect_failed');
@@ -121,10 +113,7 @@ const EditorLayout = () => {
           <DevScribbleLogo />
         </div>
         <ClientsList clients={clients} currentUserSocketId={socketRef.current?.id} />
-        <div className="btnGroupWrapper">
-            <button className="copyBtn" onClick={copyRoomId}>📋 Copy Room Id</button>
-            <button className="leaveBtn" onClick={leaveRoom}>← Leave Room</button>
-        </div>
+        <RoomButtons socketRef={socketRef} roomId={roomId} />
       </aside>
       <main className="rightPanelWrapper">
         <Outlet context={{ socketRef, roomId, codeRef, canvasContentRef }}/>
