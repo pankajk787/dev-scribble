@@ -1,12 +1,12 @@
-# Realtime Editor
+# DevDribble - A Collaboration Tool
 
-Realtime Editor is a collaborative code editor built with the MERN stack. It allows multiple users to edit code in real-time.
+DevDribble is a collaborative code editor and canvas editor built with the MERN stack. It allows multiple users to edit code and draw in canvas in real-time.
 
 ## Features
 
 - Real-time collaboration
 - Room-based editing
-- Syntax highlighting
+
 
 ## Tech Stack
 
