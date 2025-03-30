@@ -1,6 +1,6 @@
-# DevDribble - A Collaboration Tool
+# DevScribble - A Collaboration Tool
 
-DevDribble is a collaborative code editor and canvas editor built with the MERN stack. It allows multiple users to edit code and draw in canvas in real-time.
+DevScribble is a collaborative code editor and canvas editor built with the MERN stack. It allows multiple users to edit code and draw in canvas in real-time.
 
 ## Features
 
