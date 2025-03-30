@@ -110,6 +110,7 @@
 
 .txt-msg {
     padding-left: 8px;
+    overflow-wrap: anywhere;
 }
 
 .message-container {

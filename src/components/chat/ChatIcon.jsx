@@ -81,7 +81,7 @@ const ChatIcon = ({ socketRef, roomId }) => {
 
                 {newMessagesCount > 0 && (
                     <span className="chat-notification-badge">
-                        {newMessagesCount}
+                        {newMessagesCount >= 10 ? "9+" : newMessagesCount}
                     </span>
                 )}
             </div>
