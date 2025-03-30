@@ -86,15 +86,18 @@ const ChatIcon = ({ socketRef, roomId }) => {
                 )}
             </div>
 
-            <div className={`chat-window-wrapper ${isOpen ? "open" : ""}`}>
-                <ChatWindow
-                    onClose={toggleChat}
-                    messages={messages}
-                    socketRef={socketRef}
-                    messageInputRef={messageInputRef}
-                    handleSend={handleSend}
-                />
-            </div>
+            {
+                isOpen &&
+                <div className={`chat-window-wrapper`}>
+                    <ChatWindow
+                        onClose={toggleChat}
+                        messages={messages}
+                        socketRef={socketRef}
+                        messageInputRef={messageInputRef}
+                        handleSend={handleSend}
+                    />
+                </div>
+            }
         </div>
     );
 };

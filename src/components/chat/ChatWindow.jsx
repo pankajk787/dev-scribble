@@ -1,7 +1,7 @@
 import { format } from "date-fns";
 import { useEffect, useRef } from "react";
-import "./style.css";
 import { getAvatarName, getAvatarShort } from "../../utils/misc";
+import "./style.css";
 
 const ChatWindow = ({
     onClose,
@@ -128,6 +128,7 @@ const SendMessage = (props) => {
                         rows={1}
                         placeholder="Type a message..."
                         className="chat-input"
+                        autoFocus
                         ref={messageInputRef}
                         style={{ resize: "none", maxHeight: "110px" }}
                         onKeyDown={handleKeyDown}

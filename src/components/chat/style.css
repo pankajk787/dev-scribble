@@ -61,13 +61,13 @@
 }
 
 /* Chat Window */
-.chat-window-wrapper {
+/* .chat-window-wrapper {
     display: none;
 }
 
 .chat-window-wrapper.open {
     display: block;
-}
+} */
 
 /* ChatIcon.jsx css end */
 
