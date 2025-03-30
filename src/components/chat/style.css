@@ -79,10 +79,11 @@
     max-width: 400px;
     width: 40vw;
     min-height: 150px;
-    max-height: 400px;
+    max-height: 450px;
+    min-height: 300px;
     background-color: #1e1e1e;
     border-radius: 10px;
-    box-shadow: 0px 4px 6px rgba(255, 255, 255, 0.2);
+    box-shadow: 0px 2px 5px 5px rgba(206, 206, 206, 0.2);
     display: flex;
     flex-direction: column;
     padding: 10px;
@@ -94,7 +95,6 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-bottom: 1px solid #444;
     padding-bottom: 5px;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
@@ -102,7 +102,7 @@
 .chat-close-btn {
     background: none;
     border: none;
-    color: #aaa;
+    color: #fff;
     font-size: 16px;
     cursor: pointer;
 }
@@ -121,7 +121,7 @@
 
 .message-container {
     display: flex;
-    align-items: center;
+    align-items: start;
     gap: 8px;
     font-family: "Nunito Sans", sans-serif;
 }
@@ -179,6 +179,10 @@
     text-align: center;
     color: #888;
     font-style: italic;
+    height: 183px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .chat-input-container {
@@ -207,8 +211,11 @@
     font-family: "Nunito Sans", sans-serif;
     transition: all 0.3s ease-in-out;
     outline: none;
-    resize: vertical;
-    
+    resize: none;
+    max-height: 110px;
+    overflow-y: auto;
+    height: 40px;
+    line-height: 1.3;
 }
 
 .chat-input:focus,
@@ -220,11 +227,17 @@
     background: none;
     border: none;
     cursor: pointer;
-    color: white;
-    padding: 0.5rem 0.4rem;
-    border-radius: 0.4rem;
+    border-radius: 50%;
     outline: none;
-    border: 2px solid transparent; 
+    align-self: flex-end;
+    transform: rotate(45deg);
+    position: 'relative';
+    padding: 5px 8px !important;
+    background-color: #007f22;
+    color: '#fff';
+    transition: all 0.2s ease-in-out;
 }
 
-/*  */
+.chat-send-btn:hover {
+    background-color: #02b431;
+}

@@ -84,29 +84,63 @@ const ChatWindow = ({
                         </div>
                     </div>
                 ))}
-                <div ref={messagesEndRef} />
+                {
+                    messages.length > 0 &&
+                    <div ref={messagesEndRef} />
+                }
                 {messages.length === 0 && (
                     <div className="no-messages">No messages yet.</div>
                 )}
             </div>
+            <SendMessage
+                messageInputRef={messageInputRef}
+                handleSend={handleSend}
+            />
+            
+        </div>
+    );
+};
 
-            <div className="chat-input-container">
+const SendMessage = (props) => {
+    const { messageInputRef, handleSend } = props;
+
+    const handleKeyDown = (e) => {
+        if (e.key === "Enter" && !e.shiftKey) {
+            e.preventDefault();
+            handleSend();
+        }
+    };
+    const handleInput = (e) => {
+        e.target.style.height = "auto"; 
+        e.target.style.height = `${e.target.scrollHeight + 7}px`;
+    };
+    return (
+        <div className="chat-input-container">
                 <form
                     onSubmit={(e) => {
                         e.preventDefault();
                         handleSend();
                     }}>
                     <textarea
-                        rows={2}
+                        rows={1}
                         placeholder="Type a message..."
                         className="chat-input"
                         ref={messageInputRef}
+                        style={{ resize: "none", maxHeight: "110px" }}
+                        onKeyDown={handleKeyDown}
+                        onInput={handleInput}
                     />
                     <button
                         type="submit"
                         aria-label="Send message"
-                        className="chat-send-btn">
+                        className="chat-send-btn"
+                    >
                         <svg
+                            style={ {
+                                position: 'relative',
+                                top: '3px',
+                                right: '2px'
+                            }}
                             width="24"
                             height="24"
                             viewBox="0 0 24 24"
@@ -121,8 +155,7 @@ const ChatWindow = ({
                     </button>
                 </form>
             </div>
-        </div>
-    );
-};
+    )
+}
 
 export default ChatWindow;
