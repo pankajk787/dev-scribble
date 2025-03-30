@@ -60,17 +60,6 @@
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
 }
 
-/* Chat Window */
-/* .chat-window-wrapper {
-    display: none;
-}
-
-.chat-window-wrapper.open {
-    display: block;
-} */
-
-/* ChatIcon.jsx css end */
-
 /*  */
 .chat-window {
     position: absolute;
@@ -117,6 +106,10 @@
     flex-direction: column;
     gap: 5px;
     padding-right: 5px;
+}
+
+.txt-msg {
+    padding-left: 8px;
 }
 
 .message-container {
