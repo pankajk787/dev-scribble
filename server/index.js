@@ -67,6 +67,16 @@ io.on('connection', (socket) => {
         io.to(socketId).emit(ACTIONS.CANVAS_CHANGE, { canvasContent, senderId, isCanvasSync: true });
     });
 
+    socket.on(ACTIONS.SEND_MESSAGE, (data) => {
+        const { roomId } = data;
+        const clients = getAllConnectedClients(roomId);
+        clients.forEach((client) => {
+            if (client.socketId !== socket.id) {
+                io.to(client.socketId).emit(ACTIONS.RECIEVED_MESSAGE, data)
+            }
+        })
+    })
+
     socket.on('disconnecting', () => {
         const rooms = [...socket.rooms];
         // Notify all clients in the room that a user has disconnected
