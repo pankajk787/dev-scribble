@@ -1,6 +1,7 @@
 import { format } from "date-fns";
 import { useEffect, useRef } from "react";
 import "./style.css";
+import { getAvatarName, getAvatarShort } from "../../utils/misc";
 
 const ChatWindow = ({
     onClose,
@@ -43,47 +44,49 @@ const ChatWindow = ({
             </div>
 
             <div className="chat-messages">
-                {messages.map((msg) => (
-                    <div
-                        key={msg.messageId}
-                        className={`message-container ${
-                            msg.senderSocketId === socketRef.current.id
-                                ? "user"
-                                : "other"
-                        }`}>
-
+                {messages.map((msg) => {
+                    const isSelf = msg.senderSocketId === socketRef.current.id;
+                    return (
                         <div
-                            title={msg.username}
-                            className="user-avatar"
-                            style={{
-                                backgroundColor: getUserBGColor(
-                                    msg.senderSocketId
-                                ),
-                            }}>
-                            {msg.username.charAt(0)}
-                        </div>
-
-                        <div
-                            className={`message-box ${
-                                msg.senderSocketId === socketRef.current.id
+                            key={msg.messageId}
+                            className={`message-container ${
+                                isSelf
                                     ? "user"
                                     : "other"
                             }`}>
-                            <span>{msg.text}</span>
-                            <span className="message-time">
-                                {format(
-                                    new Date(
-                                        msg.senderSocketId ===
-                                        socketRef.current.id
-                                            ? msg.sentTime
-                                            : msg.recievedTime
-                                    ),
-                                    "hh:mm a"
-                                )}
-                            </span>
+    
+                            <div
+                                title={msg.username}
+                                className="user-avatar"
+                                style={{
+                                    backgroundColor: isSelf? '#007f22' : "#0098ff"
+                                }}>
+                                {getAvatarShort(msg.username)}
+                            </div>
+    
+                            <div
+                                className={`message-box ${
+                                    isSelf
+                                        ? "user"
+                                        : "other"
+                                }`}>
+                                <span className="sender-name" style={{ color : isSelf ? '#007f22' : "#18a2ff" }}>{getAvatarName(msg.username)}</span>
+                                <span>{msg.text}</span>
+                                <span className="message-time">
+                                    {format(
+                                        new Date(
+                                            msg.senderSocketId ===
+                                            socketRef.current.id
+                                                ? msg.sentTime
+                                                : msg.recievedTime
+                                        ),
+                                        "hh:mm a"
+                                    )}
+                                </span>
+                            </div>
                         </div>
-                    </div>
-                ))}
+                    );
+                })}
                 {
                     messages.length > 0 &&
                     <div ref={messagesEndRef} />
