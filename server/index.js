@@ -44,7 +44,7 @@ io.on('connection', (socket) => {
                 username, // Send the username of the new user just joined,
                 socketId: socket.id // Send the socket id of the new user just joined
             })
-        })
+    })
     })
 
     socket.on(ACTIONS.CODE_CHANGE, (data) => {
@@ -76,6 +76,37 @@ io.on('connection', (socket) => {
             }
         })
     })
+
+    socket.on(ACTIONS.VOICE_CHAT_INITIATE, ({ to }) => {
+        io.to(to).emit(ACTIONS.VOICE_CHAT_INITIATE, {
+            peerSocketId: socket.id,
+        });
+    });
+    
+    // Relay OFFER
+    socket.on(ACTIONS.OFFER, ({ to, offer }) => {
+        io.to(to).emit(ACTIONS.OFFER, {
+            from: socket.id,
+            offer,
+        });
+    });
+
+    // Relay ANSWER
+    socket.on(ACTIONS.ANSWER, ({ to, answer }) => {
+        io.to(to).emit(ACTIONS.ANSWER, {
+            from: socket.id,
+            answer,
+        });
+    });
+
+    // Relay ICE CANDIDATE
+    socket.on(ACTIONS.ICE_CANDIDATE, ({ to, candidate }) => {
+        io.to(to).emit(ACTIONS.ICE_CANDIDATE, {
+            from: socket.id,
+            candidate,
+        });
+    });
+
 
     socket.on('disconnecting', () => {
         const rooms = [...socket.rooms];
