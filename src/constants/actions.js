@@ -9,7 +9,11 @@ const ACTIONS = {
     SYNC_CANVAS_CONTENT: 'sync-canvas-content',
     CANVAS_CHANGE: 'canvas-update',
     SEND_MESSAGE: "send-message",
-    RECIEVED_MESSAGE: 'recieved_message'
+    RECIEVED_MESSAGE: 'recieved_message',
+    VOICE_CHAT_INITIATE: "voice-chat-initiate",
+    ICE_CANDIDATE: "ice-candidate",
+    OFFER: "offer",
+    ANSWER: "answer",
 }
 
 module.exports = ACTIONS;
