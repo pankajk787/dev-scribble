@@ -1,6 +1,7 @@
 const express = require('express');
 const app = express();
 const http = require('http');
+const path = require('path');
 const cors = require('cors');
 const { Server } = require('socket.io');
 const ACTIONS = require('../src/constants/actions');
@@ -8,6 +9,7 @@ const ACTIONS = require('../src/constants/actions');
 app.use(express.json());
 app.use(cors()); // TODO: DO proper CORS setup
 
+app.use(express.static(path.join(__dirname, '../build')));
 const server = http.createServer(app);
 const io = new Server(server);
 
@@ -145,6 +147,10 @@ app.get('/get-self', (req, res) => {
     }
     return res.status(400).json({ message: 'Invalid request' })
 })
+
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, '../build', 'index.html'));
+});
 
 const PORT = process.env.PORT || 5000;
 server.listen(PORT, () => {
