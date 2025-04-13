@@ -15,6 +15,7 @@ import { SUPPORTED_LANGUAGES } from "../components/constants";
 import useSelfDetailsStore from "../store/self-details-slice";
 import DevScribbleLogo from "../components/logo";
 import RoomButtons from "../components/room-buttons";
+import "../styles/editor-layout.css";
 
 const EditorLayout = () => {
     const navigate = useNavigate();
@@ -36,7 +37,7 @@ const EditorLayout = () => {
                 function handleError(error) {
                     console.error("Socket error:", error);
                     toast.error("Connection Failed! Please try again.");
-                    navigate("/", { replace: true});
+                    navigate("/", { replace: true });
                 }
 
                 socketRef.current.on("connect_error", handleError);
@@ -54,26 +55,29 @@ const EditorLayout = () => {
                         socketId,
                     } = data;
 
-                    if(joinedUserName !== username) {
+                    if (joinedUserName !== username) {
                         toast.success(`${joinedUserName} joined the room!`);
                     }
 
                     setClients(clients);
 
                     await new Promise((resolve) => setTimeout(resolve, 1000)); // Wait for 1 second- after that sync code so that other users editor is initialized
-                    if(codeRef.current?.code) {
-                        socketRef.current.emit(ACTIONS.SYNC_CODE, { // Sync the code to just joined user
+                    if (codeRef.current?.code) {
+                        socketRef.current.emit(ACTIONS.SYNC_CODE, {
+                            // Sync the code to just joined user
                             socketId,
                             code: codeRef.current?.code || "",
-                            language: codeRef.current?.language || SUPPORTED_LANGUAGES[0].value
-                        })
+                            language:
+                                codeRef.current?.language ||
+                                SUPPORTED_LANGUAGES[0].value,
+                        });
                     }
-                    if(canvasContentRef.current) {
+                    if (canvasContentRef.current) {
                         socketRef.current.emit(ACTIONS.SYNC_CANVAS_CONTENT, {
                             socketId,
                             senderId: socketRef.current.id,
-                            canvasContent: canvasContentRef.current
-                        })
+                            canvasContent: canvasContentRef.current,
+                        });
                     }
 
                     if (socketRef.current.id !== socketId) {
@@ -86,7 +90,7 @@ const EditorLayout = () => {
                 socketRef.current.on(ACTIONS.SELF_JOINED, (data) => {
                     const { isCreator } = data;
                     setSelfDetails(data);
-                })
+                });
 
                 socketRef.current.on(ACTIONS.DISCONNECTED, (data) => {
                     const {
@@ -94,7 +98,7 @@ const EditorLayout = () => {
                         socketId,
                         isCreator,
                     } = data;
-                    if(isCreator) {
+                    if (isCreator) {
                         // If user disconnected is creator of the room
                         toast.success(`Session Ended!`, {
                             icon: <VscDebugDisconnect />,
@@ -130,7 +134,7 @@ const EditorLayout = () => {
         // eslint-disable-next-line
     }, []);
 
-    if(!roomId || !username) {
+    if (!roomId || !username) {
         return (
             <Navigate
                 to="/"
@@ -141,24 +145,28 @@ const EditorLayout = () => {
     return (
         <div className="appLayoutWrapper">
             <aside className="leftPanelWrapper">
-                <div className="leftPanelLogoWrapper dashedBorderBottom">
+                <div className="leftPanelLogoWrapper">
                     <DevScribbleLogo />
                 </div>
-                {socketRef.current && socketRef.current.id && (
-                    <ClientsList
-                        clients={clients}
-                        currentUserSocketId={socketRef.current?.id}
+                <div className="leftPanelContentWrapper">
+                    {socketRef.current && socketRef.current.id && (
+                        <ClientsList
+                            clients={clients}
+                            currentUserSocketId={socketRef.current?.id}
+                            socketRef={socketRef}
+                            roomId={roomId}
+                        />
+                    )}
+                    <RoomButtons
                         socketRef={socketRef}
                         roomId={roomId}
                     />
-                )}
-                <RoomButtons
-                    socketRef={socketRef}
-                    roomId={roomId}
-                />
+                </div>
             </aside>
             <main className="rightPanelWrapper">
-                <Outlet context={{ socketRef, roomId, codeRef, canvasContentRef }}/>
+                <Outlet
+                    context={{ socketRef, roomId, codeRef, canvasContentRef }}
+                />
             </main>
         </div>
     );

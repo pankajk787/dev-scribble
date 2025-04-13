@@ -19,8 +19,7 @@ const Client = ({
     const isLocalUser = currentUserSocketId === client.socketId;
     return (
         <div
-            className="connectedUserWrapper"
-            style={{ border: "1px solid red" }}>
+            className="connectedUserWrapper">
             <span
                 className="connectedUserAvatar"
                 style={{ backgroundColor: getRandomColor(index) }}>
