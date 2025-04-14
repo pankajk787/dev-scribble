@@ -5,8 +5,7 @@ import {
     getRandomColor,
 } from "../../utils/misc";
 import "./style.css";
-import MicOffIcon from "../../assets/MicOffIcon";
-import MicIcon from "../../assets/MicIcon";
+import MicIcon from "../../assets/icons/MicIcon";
 
 const Client = ({
     client,
@@ -19,30 +18,31 @@ const Client = ({
     const isLocalUser = currentUserSocketId === client.socketId;
     return (
         <div
-            className="connectedUserWrapper">
+            className="connectedUserWrapper"
+            onClick={() => {
+                if (isLocalUser) {
+                    toggleMute(client.socketId);
+                }
+            }}>
             <span
                 className="connectedUserAvatar"
                 style={{ backgroundColor: getRandomColor(index) }}>
                 {getAvatarShort(client.username)}
-                {isLocalUser && (
-                    <button
-                        className="muteToggleBtn"
-                        style={{ color: "white" }}
-                        onClick={toggleMute}
-                        aria-label={isMuted() ? "Unmute" : "Mute"}
-                        title={isMuted() ? "Unmute" : "Mute"}>
-                        <span className="sr-only">
-                            {isMuted() ? "Unmute" : "Mute"}
-                        </span>
-                        {isMuted() ? (
-                            <MicOffIcon size={20} />
-                        ) : (
-                            <MicIcon size={20} />
-                        )}
-                    </button>
-                )}
             </span>
-
+            {isLocalUser && (
+                <button
+                    className={`muteToggleBtn ${
+                        isMuted() ? "muted" : "unmuted"
+                    }`}
+                    style={{ color: "white" }}
+                    aria-label={isMuted() ? "Unmute" : "Mute"}
+                    title={isMuted() ? "Unmute" : "Mute"}>
+                    <span className="sr-only">
+                        {isMuted() ? "Unmute" : "Mute"}
+                    </span>
+                    <MicIcon size={20} />
+                </button>
+            )}
             <div className="connectedUserName">
                 {getAvatarName(client.username)} {isLocalUser && "(You)"}
             </div>

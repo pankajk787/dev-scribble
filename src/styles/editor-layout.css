@@ -31,10 +31,14 @@ aside.leftPanelWrapper {
     display: flex;
     flex-direction: column;
     gap: 10px;
-    padding: 0.8rem 0 ;
+    padding: 0.8rem 0;
 }
 
 .btnGroupWrapper button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
     width: 100%;
     padding: 0.5rem 1rem;
     font-size: 1rem;
@@ -58,4 +62,61 @@ aside.leftPanelWrapper {
 
 .copyBtn:hover {
     background-color: rgb(0, 120, 0);
+}
+
+.menu {
+    display: none;
+}
+
+@media screen and (max-width: 768px) {
+
+    .appLayoutWrapper.menu-closed {
+        grid-template-columns: 70px 1fr;
+        transition: grid-template-columns 0.3s ease;
+    }
+    
+    .menu-closed .leftPanelLogoWrapper {
+        flex-direction: column;
+        overflow: hidden;
+    }
+
+    .leftPanelLogoWrapper {
+        display: flex;
+        flex-direction: row;
+        align-items: flex-start;
+        gap: 0.2rem;
+        justify-content: space-between;
+    }
+
+    .menu {
+        display: block;
+        cursor: pointer;
+        padding: 6px 7px 3px 7px;
+        background-color: #0d252d00;
+        border-radius: 0.6rem;
+        transform: rotate(0deg);
+    }
+
+    .menu:hover {
+        background-color: #13343feb;
+    }
+
+    .menu-closed .menu {
+        transform: rotate(180deg);
+    }
+
+
+    .menu-closed .leftPanelContentWrapper {
+        max-height: calc(100vh - 142px);
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        gap: 10px;
+        border-radius: 5px;
+    }
+
+    .menu-closed .btnGroupWrapper .btn-text {
+        display: none;
+    }
 }

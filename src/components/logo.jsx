@@ -3,11 +3,12 @@ import "../styles/DevScribbleLogo.css";
 
 const DevScribbleLogo = () => {
     return (
-        <div className="logoWrapper dashedBorderBottom">
+        <div className="logoWrapper">
             <img
                 src={DevScribbleLogoImg}
                 alt="dev-scribble-logo"
                 className="logoImage"
+                title="DevScribble Realtime collaboration | Dev & Draw"
             />
             <div className="logoTextWrapper">
                 <div className="logoText">DevScribble</div>

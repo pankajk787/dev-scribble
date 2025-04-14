@@ -15,6 +15,7 @@ import { SUPPORTED_LANGUAGES } from "../components/constants";
 import useSelfDetailsStore from "../store/self-details-slice";
 import DevScribbleLogo from "../components/logo";
 import RoomButtons from "../components/room-buttons";
+import ChevronLeftIcon from "../assets/icons/ChevronLeftIcon";
 import "../styles/editor-layout.css";
 
 const EditorLayout = () => {
@@ -29,6 +30,7 @@ const EditorLayout = () => {
     const canvasContentRef = useRef(null);
     const setSelfDetails = useSelfDetailsStore((state) => state.setSelfDetails);
 
+    const layoutRef = useRef(null);
     useEffect(() => {
         (async function init() {
             try {
@@ -142,11 +144,25 @@ const EditorLayout = () => {
             />
         );
     }
+    const toggleMenu = () => {
+        const layout = layoutRef.current;
+        layout.classList.toggle("menu-opened");
+        layout.classList.toggle("menu-closed");
+    };
     return (
-        <div className="appLayoutWrapper">
+        <div
+            className="appLayoutWrapper menu-closed"
+            ref={layoutRef}>
             <aside className="leftPanelWrapper">
-                <div className="leftPanelLogoWrapper">
+                <div className="leftPanelLogoWrapper dashedBorderBottom">
                     <DevScribbleLogo />
+                    <div
+                        className="menu"
+                        onClick={() => {
+                            toggleMenu();
+                        }}>
+                        <ChevronLeftIcon />
+                    </div>
                 </div>
                 <div className="leftPanelContentWrapper">
                     {socketRef.current && socketRef.current.id && (
