@@ -1,0 +1,44 @@
+.logoWrapper {
+    --logo-size: 50px;
+}
+
+.logoWrapper {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.logoWrapper > img {
+    width: var(--logo-size);
+    height: var(--logo-size);
+}
+
+.logoText {
+    font-size: 20px;
+    font-weight: bolder;
+}
+
+.logoTagLine {
+    font-size: 12px;
+    color: rgb(26, 250, 26);
+}
+
+.logoTextWrapper {
+    border-left: 2px solid #fff;
+    padding-left: 10px;
+}
+
+@Media screen and (max-width: 768px) {
+    .logoWrapper > img {
+        width: 40px;
+        height: 40px;
+        margin: 0;
+    }
+
+    .logoTagLine,
+    .logoText {
+        font-size: 10px;
+        display: none;
+    }
+}

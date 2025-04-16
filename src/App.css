@@ -15,32 +15,7 @@
   flex-direction: column;
 }
 
-.logoWrapper {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-bottom: 20px;
-}
 
-.logoWrapper >img {
-  width: 50px;
-  height: 50px;
-}
-
-.logoText {
-  font-size: 20px;
-  font-weight: bolder;
-}
-
-.logoTagLine {
-  font-size: 12px;
-  color: rgb(26, 250, 26);;
-}
-
-.logoTextWrapper {
-  border-left: 2px solid #fff;
-  padding-left: 10px;
-}
 
 .mainLabel {
   margin: 0 0 14px 10px;
@@ -111,63 +86,3 @@ button {
   text-decoration: none;
 }
 
-.appLayoutWrapper {
-  display: grid;
-  grid-template-columns: 230px 1fr;
-}
-
-aside.leftPanelWrapper {
-  padding: 0 14px;
-  max-height: 100vh;
-  overflow-y: auto;
-}
-
-main.rightPanelWrapper {
-  background-color: #252525c4;
-  height: 100%;
-  padding: 10px;
-  height: 100vh;
-  max-height: 100vh;
-  overflow-y: auto;
-}
-
-.dashedBorderBottom {
-  border-bottom: 1px dashed #585757;
-}
-.leftPanelLogoWrapper.dashedBorderBottom {
-  margin: 20px 0;
-}
-
-.btnGroupWrapper {
-  position: absolute;
-  bottom: 5px;
-  left: 5px;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  width: 225px;
-  padding: 10px;
-}
-.btnGroupWrapper button{
-  padding: 8px 15px;
-  font-size: 16px;
-  transition: all 0.3s ease-in-out;
-  border-radius: 10px;
-  cursor: pointer;
-  color: #fff;
-}
-.leaveBtn {
-  background-color: rgb(255, 0, 0);
-}
-
-.leaveBtn:hover {
-  background-color: rgb(234, 4, 4);
-}
-
-.copyBtn {
-  background-color: rgb(1, 173, 1);
-}
-
-.copyBtn:hover {
-  background-color: rgb(2, 188, 2);
-}
