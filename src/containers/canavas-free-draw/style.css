@@ -26,7 +26,7 @@
 
 .scrollTool {
     position: relative;
-    top: -20px;
+    top: -14px;
     left: calc(50% - 45px);
     transform: translate(-50%, -50%);
     z-index: 10;
@@ -40,7 +40,7 @@
 }
 
 .scrollTool.open {
-    top: calc(95vh - 6px);
+    top: calc(95vh);
 }
 
 .scrollToolIcon {
@@ -114,4 +114,10 @@
 .strokeWidth-3 {
     font-size: 18px;
     font-weight: 600;
+}
+
+@media  screen and (max-width: 768px) {
+    .scrollTool {
+        left: 50%;
+    }
 }

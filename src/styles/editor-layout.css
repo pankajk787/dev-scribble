@@ -40,7 +40,7 @@ aside.leftPanelWrapper {
     justify-content: center;
     gap: 5px;
     width: 100%;
-    padding: 0.5rem 1rem;
+    padding: 0.4rem 0.5rem;
     font-size: 1rem;
     border-radius: 0.5rem;
     cursor: pointer;
@@ -118,5 +118,12 @@ aside.leftPanelWrapper {
 
     .menu-closed .btnGroupWrapper .btn-text {
         display: none;
+    }
+
+    .btnGroupWrapper button {
+        padding: 0.2rem !important;
+    }
+    .btn-icon {
+        font-size: small;
     }
 }

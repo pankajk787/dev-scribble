@@ -67,7 +67,6 @@
     right: 0;
     max-width: 400px;
     width: 40vw;
-    min-height: 150px;
     max-height: 450px;
     min-height: 300px;
     background-color: #000;
@@ -197,6 +196,7 @@
     flex: 1;
     align-items: center;
     gap: 5px;
+    max-width: 100%;
 }
 
 

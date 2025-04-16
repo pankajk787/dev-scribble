@@ -30,7 +30,7 @@ const CanvasToolbar = ({ tool, handleToolChange, strokeRef }) => {
         onChange={(e) => strokeRef.current.strokeColor = e.target.value}
       />
       <div className="toolSettingWrapper">
-        <button className="toolBtn" title="Stroke Settings" onClick={onPenSettingsToggle}><MdOutlineSettings /></button>
+        <button className="toolBtn" style={{ paddingTop: "6px"}} title="Stroke Settings" onClick={onPenSettingsToggle}><MdOutlineSettings /></button>
         <div className={`toolSettings ${open ? "open" : ""}`}>
           <div className="toolSettingRow">
             <label>Stroke Type</label>

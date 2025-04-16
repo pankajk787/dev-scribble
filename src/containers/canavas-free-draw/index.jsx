@@ -300,7 +300,7 @@ const CanvasFreeDraw = ({ socketRef, roomId }) => {
             <canvas
               ref={canvasRef}
               className="canvasFreeDraw"
-              style={{ border: "1px solid black" }}
+              // style={{ border: "1px solid black" }}
             ></canvas>
           </div>
         </div>
