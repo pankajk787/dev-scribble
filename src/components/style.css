@@ -1,4 +1,5 @@
 .editor-header {
+    background-color: #1e1e1e;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -13,11 +14,13 @@
     font-size: 16px;
     border-radius: 7px;
 }
+
 .editor-language-select-option {
     padding: 5px;
     background-color: #fff;
     color: #000;
 }
+
 .editor-language-select-option.selected {
     background-color: rgb(20, 114, 247) !important;
     color: #fff !important;

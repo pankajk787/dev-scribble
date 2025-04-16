@@ -9,7 +9,7 @@ const ClientsList = ({ clients, currentUserSocketId, socketRef, roomId }) => {
         socketRef,
     });
     return (
-        <div>
+        <div className="clientsListWrapper">
             <h4>Connected</h4>
             <div className="connectedUsersWrapper">
                 {clients.map((client, index) => (
