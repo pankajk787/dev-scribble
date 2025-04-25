@@ -126,10 +126,7 @@ span.sr-only {
     .menu-closed .clientsListWrapper h4 {
         display: none;
     }
-
-
-
-
+    
     .menu-closed .connectedUserAvatar {
         --avatar-size: 30px;
         cursor: pointer;

@@ -78,12 +78,13 @@
     color: #fff;
     position: absolute;
     top: -100px;
+    right: 32px;
     z-index: 10;
     min-width: 200px;
     display: flex;
     flex-direction: column;
     gap: 4px;
-    transition: all 0.2s ease-in-out;
+    transition: all 0.3s ease-in-out;
 }
 .toolSettings.open {
     top: 30px;
@@ -119,5 +120,13 @@
 @media  screen and (max-width: 768px) {
     .scrollTool {
         left: 50%;
+    }
+
+    .scrollTool.open {
+        top: calc(95vh - 20px);
+    }
+
+    .canvasFreeDrawContainer.open {
+        height: 92vh;
     }
 }
