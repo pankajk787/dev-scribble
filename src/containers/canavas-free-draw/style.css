@@ -123,10 +123,10 @@
     }
 
     .scrollTool.open {
-        top: calc(95vh - 20px);
+        top: calc(70vh - 20px);
     }
 
     .canvasFreeDrawContainer.open {
-        height: 92vh;
+        height: 70vh;
     }
 }
