@@ -68,7 +68,7 @@
     max-width: 400px;
     width: 40vw;
     max-height: 450px;
-    min-height: 300px;
+    min-height: 400px;
     background-color: #000;
     border-radius: 10px;
     box-shadow: 2px 0px 5px 5px rgba(206, 206, 206, 0.2);
@@ -180,6 +180,7 @@
     font-style: italic;
     height: 183px;
     display: flex;
+    flex: 1;
     align-items: center;
     justify-content: center;
 }
@@ -240,4 +241,21 @@
 
 .chat-send-btn:hover {
     background-color: #02b431;
+}
+@media screen and (max-width: 768px) {
+    .chat-window {
+        width: 77vw;
+        max-width: 77vw;
+        min-height: 400px;
+        max-height: 90vh;
+    }
+    .chat-messages {
+        max-height: 400px;
+    }
+    .chat-input-container {
+        gap: 2px;
+    }
+    /* .chat-input {
+        height: 30px;
+    } */
 }

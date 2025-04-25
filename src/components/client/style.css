@@ -47,8 +47,8 @@
 .muteToggleBtn {
     --icon-size: 25px;
     position: absolute;
-    top: 2px;
-    right: 2px;
+    top: 32px;
+    right: 12px;
     width: var(--icon-size);
     height: var(--icon-size);
     padding: 5px;
@@ -143,8 +143,8 @@ span.sr-only {
 
     .menu-closed .muteToggleBtn {
         --icon-size: 24px;
-        top: -2px;
-        right: -5px;
+        top: 25px;
+        right: -4px;
         color: black;
     }
 
