@@ -45,7 +45,7 @@ const HomePage = () => {
                 </span>
             </div>
         </form>
-        <footer className='appFooter'>Built with ❤️ by <a href='https://github.com/panks123' target='_blank' rel='noreferrer'>Pankaj</a></footer>
+        <footer className='appFooter'>Built with ❤️ by <a href='https://github.com/pankajk787' target='_blank' rel='noreferrer'>Pankaj</a></footer>
     </div>
   )
 }
