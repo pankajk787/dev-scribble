@@ -71,7 +71,7 @@ const ChatWindow = ({
                                         : "other"
                                 }`}>
                                 <span className="sender-name" style={{ color : isSelf ? '#007f22' : "#18a2ff" }}>{isSelf ? "You" : getAvatarName(msg.username)}</span>
-                                <span className="txt-msg">{msg.text}</span>
+                                <div className="txt-msg">{msg.text}</div>
                                 <span className="message-time">
                                     {format(
                                         new Date(
