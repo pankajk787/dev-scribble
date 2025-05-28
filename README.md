@@ -6,6 +6,7 @@ DevScribble is a collaborative code editor and canvas editor built with the MERN
 
 - Real-time collaboration
 - Room-based editing
+- Chat and voice chat like features
 
 
 ## Tech Stack
